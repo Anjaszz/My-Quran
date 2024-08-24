@@ -20,7 +20,10 @@ export default function ListSurahHome() {
                         onClick={() => detailSurah(s.nomor)}
                     >
                         <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 bg-cover bg-center rounded-full" style={{ backgroundImage: `url("/public/muslim.svg")` }}>
+                        <div
+      className="w-16 h-16 bg-cover bg-center rounded-full"
+      style={{ backgroundImage: `url("/muslim.svg")` }}
+    >
                                 <span className="text-center flex items-center justify-center w-full h-full text-gray-600 font-semibold">{s.nomor}</span>
                             </div>
                             <div className="flex flex-col">

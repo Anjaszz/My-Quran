@@ -17,21 +17,20 @@ export default function DetailSurah() {
         async function getSurah() {
             const request = await fetch(`https://equran.id/api/surat/${params?.nomor}`);
             const response = await request.json();
-
-            setSurah(response)
-            setLoading(false)
-
-            document.title = `${response.nama_latin} | Quran App`
+    
+            setSurah(response);
+            setLoading(false);
+    
+            document.title = `${response.nama_latin} | Quran App`;
+    
+            localStorage.setItem('lastRead', JSON.stringify({
+                'nama_latin': response.nama_latin,
+                'nomor': response.nomor
+            }));
         }
-
-        getSurah()
-
-        localStorage.setItem('lastRead', JSON.stringify({
-            'nama_latin': surah.nama_latin,
-            'nomor': surah.nomor
-        }));
-
-    }, [params, surah]);
+    
+        getSurah();
+    }, [params.nomor]);
 
     return (
         <>
