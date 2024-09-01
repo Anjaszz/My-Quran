@@ -14,8 +14,8 @@ export default function BannerHome() {
                 <div>
                     {Object.keys(apps.lastRead).length > 0 ? (
                         <>
-                            <h3 className="text-3xl font-medium">{apps.lastRead.nama_latin}</h3>
-                            <h5 className="text-2xl font-normal">Surah No: {apps.lastRead.nomor}</h5>
+                            <h3 className="sm:text-2xl text-3xl font-medium">{apps.lastRead.nama_latin}</h3>
+                            <h5 className="sm:text-xl text-2xl font-normal">Surah No: {apps.lastRead.nomor}</h5>
                         </>
                     ) : (
                         <h3 className="text-xl font-medium">nothing has been <br /> read yet.</h3>
@@ -23,8 +23,13 @@ export default function BannerHome() {
                 </div>
             </div>
             <div className="absolute right-4 bottom-4">
-                <img src="/quran.svg" alt="Quran" className="w-36 h-34" />
-            </div>
+    <img 
+        src="/quran.svg" 
+        alt="Quran" 
+        className="w-36 h-34 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-34" 
+    />
+</div>
+
         </div>
     );
 }
