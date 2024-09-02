@@ -10,11 +10,11 @@ My Quran adalah aplikasi web yang dibuat dengan React.js dan Tailwind CSS, mengg
 ![Ss surat](./src/assets/Screenshot/dekstop2.png)
 
 #### Tampilan SmartPhone 
-![Ss3](./src/assets/Screenshot/phone1.jpeg)
 
-![Ss4](./src/assets/Screenshot/phone2.jpeg)
+<img src="./src/assets/Screenshot/phone1.jpeg" alt="Ss3" width="300" />
+<img src="./src/assets/Screenshot/phone2.jpeg" alt="Ss4" width="300" />
+<img src="./src/assets/Screenshot/phone3.jpeg" alt="Ss5" width="300" />
 
-![Ss5](./src/assets/Screenshot/phone3.jpeg)
 
 ## Fitur
 
@@ -24,9 +24,9 @@ My Quran adalah aplikasi web yang dibuat dengan React.js dan Tailwind CSS, mengg
 
 ## Teknologi yang Digunakan
 
-- **React.js**: Library JavaScript untuk membangun antarmuka pengguna yang interaktif.
-- **Tailwind CSS**: Framework CSS untuk mendesain antarmuka yang responsif dan modern.
-- **equran.id API**: API yang menyediakan data Al-Qur'an untuk digunakan dalam aplikasi.
+- **React.js**
+- **Tailwind CSS**
+- **equran.id API**
 
 ## Cara Menggunakan
 
