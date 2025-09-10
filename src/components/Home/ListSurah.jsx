@@ -1,13 +1,20 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
+import { FavoritesContext } from "../../context/FavoritesContext";
 
 export default function ListSurahHome() {
     const navigate = useNavigate();
     const apps = useContext(AppContext);
+    const { isFavorite, toggleFavorite } = useContext(FavoritesContext);
 
     const detailSurah = (no_surah) => {
         navigate(`/surah/${no_surah}`);
+    };
+
+    const handleFavoriteClick = (e, surah) => {
+        e.stopPropagation();
+        toggleFavorite(surah);
     };
 
     return (
@@ -31,7 +38,21 @@ export default function ListSurahHome() {
                                 <span className="text-gray-400 text-base uppercase">{s.tempat_turun} - {s.jumlah_ayat} Ayat</span>
                             </div>
                         </div>
-                        <div className="text-primary text-lg font-medium">{s.nama}</div>
+                        <div className="flex items-center gap-2">
+                            <div className="text-primary text-lg font-medium">{s.nama}</div>
+                            <button
+                                onClick={(e) => handleFavoriteClick(e, s)}
+                                className={`p-2 rounded-full transition duration-200 ${
+                                    isFavorite(s.nomor) 
+                                        ? 'text-red-500 hover:text-red-600' 
+                                        : 'text-gray-400 hover:text-red-500'
+                                }`}
+                            >
+                                <svg className="w-5 h-5" fill={isFavorite(s.nomor) ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 ))}
         </div>

@@ -1,8 +1,10 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 
 export default function BannerHome() {
     const apps = useContext(AppContext);
+    const navigate = useNavigate();
 
     return (
         <div className="bg-gradient-to-br bg-gradient-to-r from-green-600 to-green-200 flex justify-center rounded-lg p-4 text-white relative overflow-hidden max-w-7xl mx-auto my-4">
@@ -16,6 +18,12 @@ export default function BannerHome() {
                         <>
                             <h3 className="sm:text-2xl text-3xl font-medium">{apps.lastRead.nama_latin}</h3>
                             <h5 className="sm:text-xl text-2xl font-normal">Surah No: {apps.lastRead.nomor}</h5>
+                            <button 
+                                onClick={() => navigate(`/surah/${apps.lastRead.nomor}`)}
+                                className="mt-4 bg-white text-green-600 font-medium px-6 py-2 rounded-lg hover:bg-green-50 transition duration-200"
+                            >
+                                Baca Kembali
+                            </button>
                         </>
                     ) : (
                         <h3 className="text-xl font-medium">nothing has been <br /> read yet.</h3>
