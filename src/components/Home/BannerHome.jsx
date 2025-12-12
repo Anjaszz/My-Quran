@@ -34,6 +34,8 @@ export default function BannerHome() {
     <img 
         src="/quran.svg" 
         alt="Quran" 
+        width="150"
+        height="150"
         className="w-36 h-34 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-34" 
     />
 </div>

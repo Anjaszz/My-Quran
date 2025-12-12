@@ -43,10 +43,11 @@ export default function ListSurahHome() {
                             <button
                                 onClick={(e) => handleFavoriteClick(e, s)}
                                 className={`p-2 rounded-full transition duration-200 ${
-                                    isFavorite(s.nomor) 
-                                        ? 'text-red-500 hover:text-red-600' 
+                                    isFavorite(s.nomor)
+                                        ? 'text-red-500 hover:text-red-600'
                                         : 'text-gray-400 hover:text-red-500'
                                 }`}
+                                aria-label={isFavorite(s.nomor) ? `Hapus ${s.nama_latin} dari favorit` : `Tambahkan ${s.nama_latin} ke favorit`}
                             >
                                 <svg className="w-5 h-5" fill={isFavorite(s.nomor) ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
