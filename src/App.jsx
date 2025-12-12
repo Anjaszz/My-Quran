@@ -13,12 +13,14 @@ function App() {
     <BrowserRouter>
       <FavoritesProvider>
         <div className="app-container">
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/surah/:nomor" element={<DetailSurah />} />
-          </Routes>
+          <main>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/surah/:nomor" element={<DetailSurah />} />
+            </Routes>
+          </main>
           <Footer />
           <PWAInstall />
           <PWAUpdateNotification />
