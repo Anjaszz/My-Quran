@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #10b981;
+        }
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #059669;
+        }
+        #preview {
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .icon-preview {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+        .icon-preview img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #d1d5db;
+        }
+        .icon-preview p {
+            margin: 5px 0;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        #status {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕌 My Al-Quran - PWA Icon Generator</h1>
+        <p>Tool ini akan membuat semua ukuran icon yang dibutuhkan untuk PWA dari logo SVG yang ada.</p>
+
+        <div>
+            <button onclick="generateIcons()">Generate All Icons</button>
+            <button onclick="downloadAll()">Download All Icons</button>
+        </div>
+
+        <div id="status"></div>
+        <div id="preview"></div>
+    </div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        const generatedIcons = {};
+
+        async function loadSVG() {
+            try {
+                const response = await fetch('./src/assets/Logo.svg');
+                const svgText = await response.text();
+                return svgText;
+            } catch (error) {
+                console.error('Error loading SVG:', error);
+                return null;
+            }
+        }
+
+        async function generateIcons() {
+            const status = document.getElementById('status');
+            const preview = document.getElementById('preview');
+
+            status.style.display = 'block';
+            status.innerHTML = 'Generating icons...';
+            preview.innerHTML = '';
+
+            const svgText = await loadSVG();
+            if (!svgText) {
+                status.innerHTML = '❌ Error: Could not load Logo.svg';
+                status.style.background = '#fee2e2';
+                status.style.borderColor = '#ef4444';
+                return;
+            }
+
+            for (const size of sizes) {
+                try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+
+                    const img = new Image();
+                    const svgBlob = new Blob([svgText], { type: 'image/svg+xml' });
+                    const url = URL.createObjectURL(svgBlob);
+
+                    await new Promise((resolve, reject) => {
+                        img.onload = () => {
+                            ctx.fillStyle = 'white';
+                            ctx.fillRect(0, 0, size, size);
+                            ctx.drawImage(img, 0, 0, size, size);
+                            URL.revokeObjectURL(url);
+                            resolve();
+                        };
+                        img.onerror = reject;
+                        img.src = url;
+                    });
+
+                    canvas.toBlob((blob) => {
+                        generatedIcons[size] = blob;
+
+                        const iconPreview = document.createElement('div');
+                        iconPreview.className = 'icon-preview';
+
+                        const imgEl = document.createElement('img');
+                        imgEl.src = URL.createObjectURL(blob);
+
+                        const label = document.createElement('p');
+                        label.textContent = `${size}x${size}`;
+
+                        const downloadBtn = document.createElement('button');
+                        downloadBtn.textContent = 'Download';
+                        downloadBtn.style.padding = '5px 10px';
+                        downloadBtn.style.fontSize = '12px';
+                        downloadBtn.onclick = () => downloadIcon(size, blob);
+
+                        iconPreview.appendChild(imgEl);
+                        iconPreview.appendChild(label);
+                        iconPreview.appendChild(downloadBtn);
+                        preview.appendChild(iconPreview);
+                    }, 'image/png');
+
+                } catch (error) {
+                    console.error(`Error generating ${size}x${size}:`, error);
+                }
+            }
+
+            status.innerHTML = '✅ All icons generated successfully! Click "Download All Icons" or download individually.';
+        }
+
+        function downloadIcon(size, blob) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `icon-${size}x${size}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+        }
+
+        async function downloadAll() {
+            if (Object.keys(generatedIcons).length === 0) {
+                alert('Please generate icons first!');
+                return;
+            }
+
+            for (const [size, blob] of Object.entries(generatedIcons)) {
+                await new Promise(resolve => setTimeout(resolve, 200));
+                downloadIcon(size, blob);
+            }
+
+            alert('All icons downloaded! Please move them to the public/icons/ folder.');
+        }
+    </script>
+</body>
+</html>

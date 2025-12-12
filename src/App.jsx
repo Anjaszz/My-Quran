@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import DetailSurah from './pages/Surah';
 import Footer from './components/Footer';
+import PWAInstall from './components/PWAInstall';
+import PWAUpdateNotification from './components/PWAUpdateNotification';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
             <Route path="/surah/:nomor" element={<DetailSurah />} />
           </Routes>
           <Footer />
+          <PWAInstall />
+          <PWAUpdateNotification />
         </div>
       </FavoritesProvider>
     </BrowserRouter>
