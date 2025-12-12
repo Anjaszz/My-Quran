@@ -1,0 +1,11 @@
+# robots.txt untuk Al-Quran Online Indonesia
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://www.al-quranonline.web.id/sitemap.xml
+
+# Crawl-delay untuk menghindari overload
+Crawl-delay: 1
